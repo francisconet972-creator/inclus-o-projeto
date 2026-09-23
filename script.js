@@ -2,26 +2,34 @@
    ANIMAÇÕES DE ENTRADA
 ========================================= */
 
-const elementos = document.querySelectorAll(".reveal");
+const elementos =
+    document.querySelectorAll(".reveal");
 
-const observer = new IntersectionObserver(
-    (entries) => {
 
-        entries.forEach((entry) => {
+const observer =
+    new IntersectionObserver(
 
-            if (entry.isIntersecting) {
+        (entries) => {
 
-                entry.target.classList.add("visible");
+            entries.forEach((entry) => {
 
-            }
+                if (entry.isIntersecting) {
 
-        });
+                    entry.target.classList.add(
+                        "visible"
+                    );
 
-    },
-    {
-        threshold: 0.12
-    }
-);
+                }
+
+            });
+
+        },
+
+        {
+            threshold: 0.12
+        }
+
+    );
 
 
 elementos.forEach((elemento) => {
@@ -38,94 +46,102 @@ elementos.forEach((elemento) => {
 const menuToggle =
     document.querySelector(".menu-toggle");
 
+
 const nav =
     document.querySelector(".nav");
 
 
-menuToggle.addEventListener("click", () => {
+if (menuToggle && nav) {
 
-    const menuAberto =
-        nav.classList.toggle("open");
+    menuToggle.addEventListener(
+        "click",
+        () => {
 
-    menuToggle.setAttribute(
-        "aria-expanded",
-        menuAberto
+            const menuAberto =
+                nav.classList.toggle("open");
+
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                menuAberto
+            );
+
+        }
     );
 
-});
+
+    const linksMenu =
+        document.querySelectorAll(".nav a");
 
 
-/* Fecha o menu quando clicar em algum link */
+    linksMenu.forEach((link) => {
 
-const linksMenu =
-    document.querySelectorAll(".nav a");
+        link.addEventListener(
+            "click",
+            () => {
+
+                nav.classList.remove("open");
 
 
-linksMenu.forEach((link) => {
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
 
-    link.addEventListener("click", () => {
-
-        nav.classList.remove("open");
-
-        menuToggle.setAttribute(
-            "aria-expanded",
-            "false"
+            }
         );
 
     });
 
-});
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (event.key === "Escape") {
+
+                nav.classList.remove(
+                    "open"
+                );
+
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+    );
+
+}
 
 
 /* =========================================
-   ANIMAÇÃO DOS QUEBRA-CABEÇAS
+   BOTÃO SAIBA MAIS
 ========================================= */
 
 const saibaMais =
     document.querySelector("#saibaMais");
 
-const transicao =
-    document.querySelector("#puzzleTransition");
 
+if (saibaMais) {
 
-saibaMais.addEventListener("click", () => {
+    saibaMais.addEventListener(
+        "click",
+        () => {
 
-    /*
-        Ativa os quebra-cabeças
-        que cobrem a tela.
-    */
+            document
+                .querySelector("#sobre")
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
 
-    transicao.classList.add("active");
+        }
+    );
 
-
-    /*
-        Depois da animação,
-        leva para a seção principal.
-    */
-
-    setTimeout(() => {
-
-        document
-            .querySelector("#sobre")
-            .scrollIntoView({
-                behavior: "smooth"
-            });
-
-    }, 680);
-
-
-    /*
-        Remove a camada depois
-        que a transição terminou.
-    */
-
-    setTimeout(() => {
-
-        transicao.classList.remove("active");
-
-    }, 1450);
-
-});
+}
 
 
 /* =========================================
@@ -136,31 +152,30 @@ const cursorGlow =
     document.querySelector(".cursor-glow");
 
 
-window.addEventListener(
-    "pointermove",
-    (event) => {
+if (cursorGlow) {
 
-        /*
-            Só ativa o efeito
-            em dispositivos com mouse.
-        */
+    window.addEventListener(
+        "pointermove",
+        (event) => {
 
-        if (
-            window.matchMedia(
-                "(pointer:fine)"
-            ).matches
-        ) {
+            if (
+                window.matchMedia(
+                    "(pointer:fine)"
+                ).matches
+            ) {
 
-            cursorGlow.style.left =
-                `${event.clientX}px`;
+                cursorGlow.style.left =
+                    `${event.clientX}px`;
 
-            cursorGlow.style.top =
-                `${event.clientY}px`;
+                cursorGlow.style.top =
+                    `${event.clientY}px`;
+
+            }
 
         }
+    );
 
-    }
-);
+}
 
 
 /* =========================================
@@ -168,31 +183,55 @@ window.addEventListener(
 ========================================= */
 
 const audio =
-    document.querySelector("#podcastAudio");
+    document.querySelector(
+        "#podcastAudio"
+    );
+
 
 const ondas =
-    document.querySelector(".sound-wave");
+    document.querySelector(
+        ".sound-wave"
+    );
 
 
-audio.addEventListener("play", () => {
+if (audio && ondas) {
 
-    ondas.classList.add("playing");
+    audio.addEventListener(
+        "play",
+        () => {
 
-});
+            ondas.classList.add(
+                "playing"
+            );
+
+        }
+    );
 
 
-audio.addEventListener("pause", () => {
+    audio.addEventListener(
+        "pause",
+        () => {
 
-    ondas.classList.remove("playing");
+            ondas.classList.remove(
+                "playing"
+            );
 
-});
+        }
+    );
 
 
-audio.addEventListener("ended", () => {
+    audio.addEventListener(
+        "ended",
+        () => {
 
-    ondas.classList.remove("playing");
+            ondas.classList.remove(
+                "playing"
+            );
 
-});
+        }
+    );
+
+}
 
 
 /* =========================================
@@ -200,48 +239,38 @@ audio.addEventListener("ended", () => {
 ========================================= */
 
 const video =
-    document.querySelector("#inclusionVideo");
+    document.querySelector(
+        "#inclusionVideo"
+    );
+
 
 const fallback =
-    document.querySelector(".video-fallback");
+    document.querySelector(
+        ".video-fallback"
+    );
 
 
-video.addEventListener("loadeddata", () => {
+if (video && fallback) {
 
-    fallback.style.display = "none";
+    video.addEventListener(
+        "loadeddata",
+        () => {
 
-});
-
-
-video.addEventListener("error", () => {
-
-    fallback.style.display = "grid";
-
-});
-
-
-/* =========================================
-   ACESSIBILIDADE
-========================================= */
-
-document.addEventListener(
-    "keydown",
-    (event) => {
-
-        /*
-            ESC fecha o menu mobile.
-        */
-
-        if (event.key === "Escape") {
-
-            nav.classList.remove("open");
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
+            fallback.style.display =
+                "none";
 
         }
+    );
 
-    }
-);
+
+    video.addEventListener(
+        "error",
+        () => {
+
+            fallback.style.display =
+                "grid";
+
+        }
+    );
+
+}
